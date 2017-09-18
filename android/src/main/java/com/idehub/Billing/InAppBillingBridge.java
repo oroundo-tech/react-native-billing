@@ -384,6 +384,26 @@ public class InAppBillingBridge extends ReactContextBaseJavaModule implements Ac
         return map;
     }
 
+    
+    @ReactMethod
+    public void getPurchaseTransactionsDetails(final Promise promise) {
+        if (bp != null) {
+            List<String> productIds = bp.listOwnedProducts();
+            WritableArray transactions = Arguments.createArray();
+            for (int i = 0; i < productIds.size(); i++) {
+                String currentProductId = productIds.get(i);
+                TransactionDetails details = bp.getPurchaseTransactionDetails(currentProductId);
+                if (details != null && currentProductId.equals(details.purchaseInfo.purchaseData.productId)) {
+                    WritableMap map = mapTransactionDetails(details);
+                    transactions.pushMap(map);
+                }
+            }
+            promise.resolve(transactions);
+        } else {
+            promise.reject("EUNSPECIFIED", "Channel is not opened. Call open() on InAppBilling.");
+        }
+    }
+
     @Override
     public void onPurchaseHistoryRestored() {
         /*

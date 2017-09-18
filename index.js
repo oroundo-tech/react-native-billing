@@ -12,7 +12,7 @@ class InAppBilling {
     }
 
     static loadOwnedPurchasesFromGoogle() {
-        return InAppBillingBridge.loadOwnedPurchasesFromGoogle();
+      return InAppBillingBridge.loadOwnedPurchasesFromGoogle();
     }
 
     static purchase(productId, developerPayload = null) {
@@ -89,6 +89,10 @@ class InAppBilling {
 
     static getSubscriptionDetailsArray(productIds) {
       return InAppBillingBridge.getSubscriptionDetails(productIds);
+    }
+
+    static getPurchaseTransactionsDetails() {
+      return InAppBillingBridge.getPurchaseTransactionsDetails();
     }
 }
 
